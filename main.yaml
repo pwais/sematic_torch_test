@@ -1,0 +1,48 @@
+# Copyright 2023 Maintainers of sematic_torch_test
+
+## Sematic project config file.  This yaml helps Sematic figure out how to run our project.
+# Notes: this project based upon Sematic's 'intermediate example':
+#  * https://github.com/sematic-ai/example_docker/blob/d09c75fa3500249e02d4336bc4c5291c94467d3c/intermediate/main.yaml#L1C1-L11C44
+# The 'intermediate' example allows you to:
+#  * Use a custom base image with whatever tools and libraries you want; to
+#      update the image you'll need to update the tag and this config file.
+#  * Include some static data files that get re-added to the worker image
+#      each run.
+#  * Include a python library that will be freshly re-added to the worker image
+#      each run.
+#
+# NB: Sematic's 'advanced' example (find at the repo linked above) does all of
+# the 'intermediate' stuff but subs out python file copying for running a user-
+# supplied build process (script) on each run.  Good example uses for 'advanced':
+#   * you have a python library with CUDA extensions and/or native code that
+#       need to be re-built every time with special support
+#   * you have a ton of non-python code that you need re-built as part of the
+#       iterative development process
+
+# Version of Sematic config file syntax
+version: 1
+
+# The base docker image URI below is what Sematic will use for building its
+# worker-specific image, which will include the code in this repo as well
+# as a Sematic worker shim to help run the job.  For this project, the
+# specific URL below is for the local image we built with 
+# `./cli.py --docker-build`; however, you can really use any Docker image,
+# e.g. the Pytorch base images available on DockerHub.
+# NB: to get the digest, which is required, use: `docker images --digests`,
+# or use <none> for local image digests.
+base_uri: "sematic_torch_test:v1@<none>"
+
+build:
+  # Change this if you want to run on e.g. Grace Hopper Arm
+  platform: "linux/amd64"                   
+
+  # Select your python code to include
+  requirements: "requirements.txt"
+  src: ["*.py"]
+
+# Push base image + code above + sematic shim as the below Docker image to
+# our K8s-accessible private Docker repo
+push:                                       
+  registry: "my-master:30100"
+  repository: "sematic_torch_test"
+  tag_suffix: "sematic-v1"

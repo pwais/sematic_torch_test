@@ -1,0 +1,12 @@
+# Copyright 2023 Maintainers of sematic_torch_test
+
+profiles:
+  default:
+    scopes: {}
+    settings:
+      sematic.config.server_settings.ServerSettings: {}
+      sematic.config.user_settings.UserSettings:
+        SEMATIC_API_ADDRESS: http://my-master
+        SEMATIC_API_KEY: wyOZshRWQ1m81xml-CTWAw
+        __version__: 0.1.0
+version: 1

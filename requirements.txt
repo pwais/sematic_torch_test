@@ -1,0 +1,14 @@
+# Copyright 2023 Maintainers of sematic_torch_test
+
+# Use torch as provided in the base image
+# TODO(sematic) make '--no-cache-dir --ignore-installed' optional
+# torch
+# torchvision
+# torchmetrics
+
+# Use sematic as provided in the base image
+# TODO(sematic) make '--no-cache-dir --ignore-installed' optional
+# sematic==0.34.1
+
+loguru
+tqdm
